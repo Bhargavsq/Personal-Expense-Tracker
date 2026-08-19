@@ -338,6 +338,6 @@ Through this project, I gained hands-on experience with:
 
 # Author
 
-**Bhargav S. Kachhiya**
+**Bhargavsq**
 
 GitHub: https://github.com/Bhargavsq
