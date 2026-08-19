@@ -340,6 +340,4 @@ Through this project, I gained hands-on experience with:
 
 **Bhargav S. Kachhiya**
 
-M.Sc. IT | Full Stack Developer | QA Automation Enthusiast
-
 GitHub: https://github.com/Bhargavsq
