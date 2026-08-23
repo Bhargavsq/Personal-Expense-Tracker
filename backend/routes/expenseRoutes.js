@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
             amount,
             category,
             date,
-            description
+            descriptions
         });
 
         const savedExpense = await expense.save();
