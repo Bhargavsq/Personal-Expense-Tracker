@@ -9,3 +9,5 @@ password
 database 
 Username: expense_admin
 Password: 1805
+
+npm install bcryptjs jsonwebtoken

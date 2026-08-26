@@ -20,22 +20,95 @@ router.get("/", async (req, res) => {
 // POST - Add new expense
 router.post("/", async (req, res) => {
     try {
-        const { title, amount, category, date, description } = req.body;
+        const { title, description, amount, category, date } = req.body;
 
         const expense = new Expense({
             title,
+            description,
             amount,
             category,
-            date,
-            descriptions
+            date
         });
 
         const savedExpense = await expense.save();
 
         res.status(201).json(savedExpense);
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             message: "Failed to add expense",
+            error: error.message
+        });
+    }
+});
+
+// GET single expense
+router.get("/:id", async (req, res) => {
+    try {
+        const expense = await Expense.findById(req.params.id);
+
+        if (!expense) {
+            return res.status(404).json({
+                message: "Expense not found"
+            });
+        }
+
+        res.status(200).json(expense);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to get expense",
+            error: error.message
+        });
+    }
+});
+
+// UPDATE expense
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedExpense = await Expense.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true,
+                runValidators: true
+            }
+        );
+
+        if (!updatedExpense) {
+            return res.status(404).json({
+                message: "Expense not found"
+            });
+        }
+
+        res.status(200).json(updatedExpense);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to update expense",
+            error: error.message
+        });
+    }
+});
+
+// DELETE expense
+router.delete("/:id", async (req, res) => {
+    try {
+        const deletedExpense = await Expense.findByIdAndDelete(req.params.id);
+
+        if (!deletedExpense) {
+            return res.status(404).json({
+                message: "Expense not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Expense deleted successfully",
+            expense: deletedExpense
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to delete expense",
             error: error.message
         });
     }
