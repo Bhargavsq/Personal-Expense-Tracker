@@ -10,4 +10,8 @@ database
 Username: expense_admin
 Password: 1805
 
-npm install bcryptjs jsonwebtoken
+backend 
+npm install express mongoose dotenv cors bcryptjs jsonwebtoken
+
+frontend
+npm install axios
