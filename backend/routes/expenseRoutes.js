@@ -1,14 +1,19 @@
 const express = require("express");
 const Expense = require("../models/Expense");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
+
 // GET all expenses
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
     try {
-        const expenses = await Expense.find().sort({ date: -1 });
+        const expenses = await Expense.find({
+            user: req.user.userId
+        }).sort({ date: -1 });
 
         res.status(200).json(expenses);
+
     } catch (error) {
         res.status(500).json({
             message: "Failed to fetch expenses",
@@ -17,22 +22,31 @@ router.get("/", async (req, res) => {
     }
 });
 
+
 // POST - Add new expense
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
     try {
-        const { title, description, amount, category, date } = req.body;
+        const {
+            title,
+            description,
+            amount,
+            category,
+            date
+        } = req.body;
 
         const expense = new Expense({
             title,
             description,
             amount,
             category,
-            date
+            date,
+            user: req.user.userId
         });
 
         const savedExpense = await expense.save();
 
         res.status(201).json(savedExpense);
+
     } catch (error) {
         res.status(500).json({
             message: "Failed to add expense",
@@ -41,10 +55,14 @@ router.post("/", async (req, res) => {
     }
 });
 
+
 // GET single expense
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
     try {
-        const expense = await Expense.findById(req.params.id);
+        const expense = await Expense.findOne({
+            _id: req.params.id,
+            user: req.user.userId
+        });
 
         if (!expense) {
             return res.status(404).json({
@@ -62,11 +80,15 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+
 // UPDATE expense
-router.put("/:id", async (req, res) => {
+router.put("/:id", authMiddleware, async (req, res) => {
     try {
-        const updatedExpense = await Expense.findByIdAndUpdate(
-            req.params.id,
+        const updatedExpense = await Expense.findOneAndUpdate(
+            {
+                _id: req.params.id,
+                user: req.user.userId
+            },
             req.body,
             {
                 new: true,
@@ -90,10 +112,14 @@ router.put("/:id", async (req, res) => {
     }
 });
 
+
 // DELETE expense
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
     try {
-        const deletedExpense = await Expense.findByIdAndDelete(req.params.id);
+        const deletedExpense = await Expense.findOneAndDelete({
+            _id: req.params.id,
+            user: req.user.userId
+        });
 
         if (!deletedExpense) {
             return res.status(404).json({
@@ -113,5 +139,6 @@ router.delete("/:id", async (req, res) => {
         });
     }
 });
+
 
 module.exports = router;
