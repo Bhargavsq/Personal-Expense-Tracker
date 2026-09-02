@@ -208,41 +208,9 @@ function Dashboard() {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-100">
+        <div className="min-h-screen  from-slate-100 via-white to-blue-100">
 
-            {/* Navbar */}
-            <nav className="bg-white/60 backdrop-blur-xl border-b border-white/40 shadow-sm sticky top-0 z-50">
-
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-
-                        <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
-                            Personal Expense Tracker
-                        </h1>
-
-                        <div className="flex items-center justify-between sm:justify-end gap-4">
-
-                            <span className="text-gray-600">
-                                Hi, {user?.name || "User"}
-                            </span>
-
-                            <button
-                                onClick={handleLogout}
-                                className="bg-white/60 backdrop-blur-md text-red-500 border border-white/60 px-4 py-2 rounded-xl hover:bg-red-50 transition"
-                            >
-                                Logout
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </nav>
-
-
+            
             {/* Main */}
             <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
 

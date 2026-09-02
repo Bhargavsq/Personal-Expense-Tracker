@@ -1,27 +1,106 @@
 import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Expenses from "./pages/Expenses";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Register from "./pages/Register";
 
+import Dashboard from "./pages/Dashboard";
+import Transactions from "./pages/Transactions";
+import Calendar from "./pages/Calendar";
+import Analysis from "./pages/Analysis";
+import Budgets from "./pages/Budgets";
+import Bills from "./pages/Bills";
+import Goals from "./pages/Goals";
+import Reports from "./pages/Reports";
+
+import DashboardLayout from "./layouts/DashboardLayout";
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/register" element={<Register />} />
+
+                {/* Authentication */}
                 <Route path="/login" element={<Login />} />
-                {/* <Route path="/expenses" element={<Expenses />} /> */}
+                <Route path="/register" element={<Register />} />
+
+                {/* Main Application */}
                 <Route
                     path="/dashboard"
                     element={
-                        <ProtectedRoute>
-                            <Dashboard/>
-                        </ProtectedRoute>
+                        <DashboardLayout>
+                            <Dashboard />
+                        </DashboardLayout>
                     }
+                />
+
+                <Route
+                    path="/transactions"
+                    element={
+                        <DashboardLayout>
+                            <Transactions />
+                        </DashboardLayout>
+                    }
+                />
+
+                <Route
+                    path="/calendar"
+                    element={
+                        <DashboardLayout>
+                            <Calendar />
+                        </DashboardLayout>
+                    }
+                />
+
+                <Route
+                    path="/analysis"
+                    element={
+                        <DashboardLayout>
+                            <Analysis />
+                        </DashboardLayout>
+                    }
+                />
+
+                <Route
+                    path="/budgets"
+                    element={
+                        <DashboardLayout>
+                            <Budgets />
+                        </DashboardLayout>
+                    }
+                />
+
+                <Route
+                    path="/bills"
+                    element={
+                        <DashboardLayout>
+                            <Bills />
+                        </DashboardLayout>
+                    }
+                />
+
+                <Route
+                    path="/goals"
+                    element={
+                        <DashboardLayout>
+                            <Goals />
+                        </DashboardLayout>
+                    }
+                />
+
+                <Route
+                    path="/reports"
+                    element={
+                        <DashboardLayout>
+                            <Reports />
+                        </DashboardLayout>
+                    }
+                />
+
+                {/* Default */}
+                <Route
+                    path="/"
+                    element={<Navigate to="/dashboard" replace />}
                 />
 
             </Routes>
